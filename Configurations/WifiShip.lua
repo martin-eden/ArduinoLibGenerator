@@ -109,7 +109,7 @@ local Where =
     This will create ".development" flag file and library is indexer
     will ignore it.
 ]]
-local Deploy =
+local How =
   {
     ReadOnly = false,
     Dependecies =

@@ -1,9 +1,9 @@
 -- Save results
 
 --[[
-  Status: in writing
-  Version: 0
-  Last mod.: 2024-02-11
+  Status: passed maiden flight
+  Version: 1
+  Last mod.: 2024-02-13
 ]]
 
 local ResultsDir = 'Results/'
@@ -12,23 +12,35 @@ local DevFlagFileName = '.development'
 
 local DirectoryExists = request('!.directory.exists')
 local CreateDirectory = request('!.directory.create')
+local CreateFile = request('!.file.create')
 local SaveToFile = request('!.string.save_to_file')
+local RemoveFile = request('!.file.remove')
+
+local CreateDirectoryErrorMsg = [[
+Cannot create directory for result files.
+  Requested directory: "%s"
+  Current directory: "%s"
+]]
 
 return
-  function(self, Result)
+  function(self, LibPropsStr, ReadOnly)
+    assert_string(LibPropsStr)
+    assert_boolean(ReadOnly)
+
     if not DirectoryExists(ResultsDir) then
       if not CreateDirectory(ResultsDir) then
         local ErrorMsg =
-          ([[Cannot create directory "%s" for result files. (Current directory is "%s".)]]):
-          format(ResultsDir, CurrentDir)
+          string.format(CreateDirectoryErrorMsg, ResultsDir, CurrentDir)
         error(ErrorMsg)
       end
     end
 
-    assert_table(Result)
-    local ResultString = Result.Data
+    local LibPropsPathName = ResultsDir .. LibPropsFileName
+    SaveToFile(LibPropsPathName, LibPropsStr)
 
-    assert_string(LibPropsFileName)
-    SaveToFile(ResultsDir .. LibPropsFileName, ResultString)
-    SaveToFile(ResultsDir .. DevFlagFileName, '')
+    local DevFlagPathName = ResultsDir .. DevFlagFileName
+    RemoveFile(DevFlagPathName)
+    if not ReadOnly then
+      CreateFile(DevFlagPathName)
+    end
   end
