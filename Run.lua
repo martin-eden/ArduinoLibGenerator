@@ -1,12 +1,12 @@
 -- ArduinoLibGenerator external entry point
 
 --[[
-  Status: works
+  Status: okay
   Version: 1
-  Last mod.: 2024-02-12
+  Last mod.: 2024-02-14
 ]]
 
-package.path = package.path .. ';../../../workshop/?.lua'
+package.path = package.path .. ';../../workshop/?.lua'
 require('base')
 
 local ConfigurationFileName = arg[1]
@@ -27,7 +27,7 @@ Usage
 
 Output
 
-  In case of success it creates "Result/" directory and writes
+  In case of success it creates "Results/" directory and writes
   "library.properties" and maybe ".development" files there.
   You can copy them to directory with your library for ArduinoIDE.
 
@@ -35,7 +35,7 @@ Output
   have enough proficiency to edit .lua file with your library
   description.
 
--- Martin, 2024-02-12
+-- Martin, 2024-02-14
 ]]
 
     print(UsageText)
