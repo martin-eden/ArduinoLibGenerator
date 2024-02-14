@@ -1,9 +1,9 @@
 -- Save results
 
 --[[
-  Status: passed maiden flight
-  Version: 1
-  Last mod.: 2024-02-13
+  Status: fine
+  Version: 2
+  Last mod.: 2024-02-14
 ]]
 
 local ResultsDir = 'Results/'
@@ -21,6 +21,8 @@ Cannot create directory for result files.
   Requested directory: "%s"
   Current directory: "%s"
 ]]
+local LibPropsCreatedMsg = [[Created "%s" in "%s".]]
+local DevFlagFilePlaced = [[Created "%s" flag file in "%s".]]
 
 return
   function(self, LibPropsStr, ReadOnly)
@@ -37,10 +39,12 @@ return
 
     local LibPropsPathName = ResultsDir .. LibPropsFileName
     SaveToFile(LibPropsPathName, LibPropsStr)
+    print(string.format(LibPropsCreatedMsg, LibPropsFileName, ResultsDir))
 
     local DevFlagPathName = ResultsDir .. DevFlagFileName
     RemoveFile(DevFlagPathName)
     if not ReadOnly then
       CreateFile(DevFlagPathName)
+      print(string.format(DevFlagFilePlaced, DevFlagFileName, ResultsDir))
     end
   end
