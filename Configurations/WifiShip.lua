@@ -30,26 +30,6 @@
   ${syncrasy} and I have feeling I'm in US 1970s.
 ]]
 
---[[
-  Not supported
-
-  * keywords.txt
-
-    I'm not gonna support generation of "keywords.txt" file at all.
-    Murky specification, forced .tsv format, dead-end toolpath.
-
-    It's 2024 here and I hope ArduinoIDE team will find a means
-    to determine name/type for code entities in this century.
-]]
-
---[[
-  Reference document:
-
-    Arduino CLI: Library specification
-
-      https://arduino.github.io/arduino-cli/0.35/library-specification/#15-library-format-rev-22
-]]
-
 --
 -- What
 --
@@ -85,10 +65,12 @@ local What =
     Architectures = { Architectures[Esp8266] },
     Description = 'Scan WiFi and connect to station.',
     Description_Continued =
-      [[Wrapper over "ESP8266WiFi.h". Simple API for daily tasks: ]] ..
-      [[Get/set MAC, scan network, connect to router by name/password, obtain IP. ]] ..
+      [[Simple API for daily tasks: ]] ..
+      [[get/set name and MAC, scan network, connect to router, return IP. ]] ..
       [[I've used space terminology "dock/undock", "ship" and "station" ]] ..
-      [[for coding delight.]],
+      [[for coding delight. ]] ..
+      [[Implemented as a wrapper over "ESP8266WiFi.h".]] ..
+      [[]],
     Version = '1.0.0', -- semver
   }
 
