@@ -7,6 +7,26 @@
 ]]
 
 --[[
+  Reference document:
+
+    Arduino CLI: Library specification
+
+      https://arduino.github.io/arduino-cli/0.35/library-specification/#15-library-format-rev-22
+]]
+
+--[[
+  Not supported
+
+  * keywords.txt
+
+    I'm not gonna support generation of "keywords.txt" file at all.
+    Murky specification, forced .tsv format, dead-end toolpath.
+
+    It's 2024 here and I hope ArduinoIDE team will find a means
+    to determine name/type of code entities in this century.
+]]
+
+--[[
   Sample library.properties:
 
     name=ArduinoJson
@@ -26,19 +46,87 @@ local AnnotatedLinesFormat = request('AnnotatedLines.Interface')
 
 local AssertNoNewlines = request('AnnotatedLines.string.assert_no_newlines')
 
-local SerializeAuthor =
-  function(Author)
-    assert_table(Author)
-    AssertNoNewlines(Author.Name)
-    return Author.Name
+--[[
+  Check library name.
+
+  Excerpts from
+
+    https://arduino.github.io/arduino-cli/0.35/library-specification/#libraryproperties-file-format
+
+  1. Library names must contain only basic letters (A-Z or a-z) and
+    numbers (0-9), spaces ( ), underscores (_), dots (.) and
+    dashes (-).
+
+  2. They must start with a letter or number.
+
+  3. They must contain at least one letter.
+
+  4. Note that libraries with a name value starting with Arduino will
+    no longer be allowed addition to the Library Manager index as
+    these names are now reserved for official Arduino libraries.
+]]
+local SerializeLibName =
+  function(LibName)
+    assert_string(LibName)
+
+    -- (1) and (2) are covered by <NamePattern>
+    local NamePattern = '^[%a%d][%a%d _.%-]*$'
+    local MatchesPattern = string.match(LibName, NamePattern)
+    if not MatchesPattern then
+      local ErrorMsgFmt =
+        "Library name doesn't match library name pattern.\n" ..
+        '  Library name: %s\n' ..
+        '  Pattern: %s\n'
+      local ErrorMsg = string.format(ErrorMsgFmt, LibName, NamePattern)
+      error(ErrorMsg)
+    end
+
+    -- (3) has letter
+    local HasLetter = (string.find(LibName, '%a') ~= nil)
+    if not HasLetter then
+      local ErrorMsgFmt =
+        'Library name must contain letter.\n' ..
+        '  Library name: %s\n'
+      local ErrorMsg = string.format(ErrorMsgFmt, LibName)
+      error(ErrorMsg)
+    end
+
+    -- (4) not starts with "Arduino"
+    --[[
+      Requirement (4) quite badly formulated as "ARDUINO" and "arduino"
+      will pass it.
+    ]]
+    local StartsWithArduino = (string.find(LibName, '^Arduino') ~= nil)
+    if StartsWithArduino then
+      local ErrorMsgFmt =
+        'Library name should not start with "Arduino".\n' ..
+        '  Library name: %s\n'
+      local ErrorMsg = string.format(ErrorMsgFmt, LibName)
+      error(ErrorMsg)
+    end
+
+    return LibName
   end
 
-local SerializeAuthors =
-  function(Authors)
-    assert_table(Authors)
+local SerializeVersion =
+  function(Version)
+    assert_string(Version)
+    return Version
+  end
+
+local SerializePerson =
+  function(Person)
+    assert_table(Person)
+    AssertNoNewlines(Person.Name)
+    return Person.Name
+  end
+
+local SerializePersons =
+  function(Persons)
+    assert_table(Persons)
     local Results = {}
-    for _, Author in ipairs(Authors) do
-      table.insert(Results, SerializeAuthor(Author))
+    for _, Person in ipairs(Persons) do
+      table.insert(Results, SerializePerson(Person))
     end
     local Result = table.concat(Results, ", ")
     return Result
@@ -50,10 +138,23 @@ return
 
     local Keyvals =
       {
-        name = Config.What.Name,
-        author = SerializeAuthors(Config.Who.Authors),
+        name = SerializeLibName(Config.What.Name),
+        version = SerializeVersion(Config.What.Version),
+        sentence = Config.What.Description,
+        paragraph = Config.What.Description_Continued,
+        author = SerializePersons(Config.Who.Authors),
+        maintainer = SerializePersons(Config.Who.Maintainers),
       }
-    local KeysOrder = {'name', 'author'}
+
+    local KeysOrder =
+      {
+        'name',
+        'version',
+        'sentence',
+        'paragraph',
+        'author',
+        'maintainer',
+      }
 
     local LibPropsStr = AnnotatedLinesFormat:Save(Keyvals, KeysOrder)
 
