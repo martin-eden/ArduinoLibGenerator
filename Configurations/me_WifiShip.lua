@@ -60,40 +60,34 @@ local Architectures =
 -- # Describe your library:
 local What =
   {
-    Name = 'WifiShip',
-    Category = Categories[Communication],
-    Architectures = { Architectures[Esp8266] },
+    Name = 'me_WifiShip',
+    Version = '1.0.0',
+    Category = Categories.Communication,
     Description = 'Scan WiFi and connect to station.',
     Description_Continued =
       [[Simple API for daily tasks: ]] ..
-      [[get/set name and MAC, scan network, connect to router, return IP. ]] ..
+      [[get/set own name and MAC, scan network, connect to router, return IP. ]] ..
       [[I've used space terminology "dock/undock", "ship" and "station" ]] ..
       [[for coding delight. ]] ..
       [[Implemented as a wrapper over "ESP8266WiFi.h".]] ..
       [[]],
-    Version = '1.0.0', -- semver
-  }
-
---
--- Where
---
-local Where =
-  {
-    Repository = 'https://github.com/martin-eden/arduino_sketchbook/'
+    MoreInfo_Url = 'https://github.com/martin-eden/arduino_sketchbook/',
   }
 
 --
 -- How
 --
 --[[
-  # Set ReadOnly to false if you want changeable examples in IDE.
+  # Set <ReadOnly? to false if you want changeable examples in IDE.
 
     This will create ".development" flag file and library is indexer
     will ignore it.
+  # Check that <Architectures> list is correct.
 ]]
 local How =
   {
     ReadOnly = false,
+    Architectures = { Architectures.Esp8266 },
     Dependecies =
       {
         { Name = '', VersionExpression = '' },
@@ -116,7 +110,6 @@ local Iam =
 local Result =
   {
     What = What,
-    Where = Where,
     How = How,
     Who =
       {

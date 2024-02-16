@@ -3,7 +3,7 @@
 --[[
   Status: writing
   Version: 1
-  Last mod.: 2024-02-13
+  Last mod.: 2024-02-16
 ]]
 
 --[[
@@ -38,8 +38,6 @@
     category=Data Processing
     url=https://arduinojson.org/?utm_source=meta&utm_medium=library.properties
     architectures=*
-    repository=https://github.com/bblanchon/ArduinoJson.git
-    license=MIT
 ]]
 
 local AnnotatedLinesFormat = request('AnnotatedLines.Interface')
@@ -108,12 +106,6 @@ local SerializeLibName =
     return LibName
   end
 
-local SerializeVersion =
-  function(Version)
-    assert_string(Version)
-    return Version
-  end
-
 local SerializePerson =
   function(Person)
     assert_table(Person)
@@ -139,9 +131,12 @@ return
     local Keyvals =
       {
         name = SerializeLibName(Config.What.Name),
-        version = SerializeVersion(Config.What.Version),
+        version = Config.What.Version,
+        category = Config.What.Category,
+        architectures = table.concat(Config.How.Architectures, ','),
         sentence = Config.What.Description,
         paragraph = Config.What.Description_Continued,
+        url = Config.What.MoreInfo_Url,
         author = SerializePersons(Config.Who.Authors),
         maintainer = SerializePersons(Config.Who.Maintainers),
       }
@@ -150,12 +145,45 @@ return
       {
         'name',
         'version',
+        'category',
+        'architectures',
         'sentence',
         'paragraph',
+        'url',
         'author',
         'maintainer',
       }
 
+    --[[
+      Do a pre-flight format check before serialization.
+
+      We are expected to have string value for every mentioned key.
+
+      Currently serialization method will raise error if key-value are
+      not strings (or if they contain newlines). So this pass is not
+      essential. Just for better error message for common case of
+      nil value.
+    ]]
+    for _, Key in ipairs(KeysOrder) do
+      assert_string(Key)
+
+      local Value = Keyvals[Key]
+      if not is_string(Value) then
+        if is_nil(Value) then
+          local ErrorMsgFmt = 'No value for key %q.'
+          local ErrorMsg = string.format(ErrorMsgFmt, Key)
+          error(ErrorMsg)
+        end
+        local ErrorMsgFmt = 'Value is not a string. (Key: %q, Value: %q)'
+        local ErrorMsg = string.format(ErrorMsgFmt, Key, tostring(Value))
+        error(ErrorMsg)
+      end
+    end
+
+    --[[
+      Here we are passing two tables to serializer. If he's not happy
+      he will blow with error().
+    ]]
     local LibPropsStr = AnnotatedLinesFormat:Save(Keyvals, KeysOrder)
 
     assert_boolean(Config.How.ReadOnly)
