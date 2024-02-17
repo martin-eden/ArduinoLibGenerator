@@ -2,7 +2,7 @@
 
 --[[
   Status: writing
-  Version: 1
+  Version: 2
   Last mod.: 2024-02-16
 ]]
 
@@ -159,10 +159,10 @@ return
 
       We are expected to have string value for every mentioned key.
 
-      Currently serialization method will raise error if key-value are
-      not strings (or if they contain newlines). So this pass is not
-      essential. Just for better error message for common case of
-      nil value.
+      Serialization method will raise error if key-value are not
+      strings (or if they contain newlines). So this pass is not
+      essential. Just for better error message for common case of nil
+      value.
     ]]
     for _, Key in ipairs(KeysOrder) do
       assert_string(Key)
@@ -189,5 +189,18 @@ return
     assert_boolean(Config.How.ReadOnly)
     local ReadOnly = Config.How.ReadOnly
 
-    return LibPropsStr, ReadOnly
+    local Result_Create, Result_Remove = {}, {}
+    do
+      local LibPropsFileName = 'library.properties'
+      local DevFlagFileName = '.development'
+
+      Result_Create[LibPropsFileName] = LibPropsStr
+      if ReadOnly then
+        Result_Remove[DevFlagFileName] = ''
+      elseif not ReadOnly then
+        Result_Create[DevFlagFileName] = ''
+      end
+    end
+
+    return Result_Create, Result_Remove
   end

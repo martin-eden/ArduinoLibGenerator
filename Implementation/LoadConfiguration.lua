@@ -6,7 +6,7 @@
   Last mod.: 2024-02-11
 ]]
 
-local FileExists = request('!.file.exists')
+local FileExists = request('!.file_system.file.exists')
 
 return
   function(self, ConfigPathName)
