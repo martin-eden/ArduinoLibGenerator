@@ -88,7 +88,7 @@ local How =
   {
     ReadOnly = false,
     Architectures = { Architectures.Esp8266 },
-    Dependecies =
+    Dependencies =
       {
         { Name = '', VersionExpression = '' },
       },

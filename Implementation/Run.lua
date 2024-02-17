@@ -2,28 +2,26 @@
 
 --[[
   Status: works
-  Version: 2
-  Last mod.: 2024-02-15
+  Version: 3
+  Last mod.: 2024-02-17
 ]]
 
 --[[
   v Receives configuration file pathname and optional result directory path
-  v if result directory is not specified, use default
   v Load configuration
-  v Generate "library.properties" contents and get ReadOnly flag
-  v Save results to files into results directory
+  v Generate list of files to create and remove
+  v Save results to files into result directory
 ]]
-
-local DefaultResultsDir = 'Results/'
 
 return
   function(self, ConfigurationPathName, ResultsDir)
-    ResultsDir = ResultsDir or DefaultResultsDir
+    assert_string(ConfigurationPathName)
     assert_string(ResultsDir)
 
     local Configuration = self:LoadConfiguration(ConfigurationPathName)
+    assert_table(Configuration)
 
-    local LibPropsStr, ReadOnly = self:Generate(Configuration)
+    local DirTree_Create, DirTree_Remove = self:Generate(Configuration)
 
-    self:SaveResults(LibPropsStr, ReadOnly, ResultsDir)
+    self:SaveResults(DirTree_Create, DirTree_Remove, ResultsDir)
   end
