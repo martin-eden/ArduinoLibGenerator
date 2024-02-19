@@ -2,7 +2,7 @@
 
 --[[
   Version: 2
-  Last mod.: 2024-02-16
+  Last mod.: 2024-02-19
 ]]
 
 package.path = package.path .. ';../../workshop/?.lua'
@@ -37,9 +37,9 @@ Parameters
   <ConfigurationFileName_Lua> - .lua file which returns table with
     library description.
 
-    Sample configuration
+    Example:
 
-      local IAm = { Name = 'Martin Eden',  Email = '' }
+      local Iam = { Name = 'Martin Eden',  Email = '' }
 
       return
         {
@@ -63,14 +63,10 @@ Parameters
             },
           Who =
             {
-              Authors = { IAm },
-              Maintainers = { IAm },
+              Authors = { Iam },
+              Maintainers = { Iam },
             },
         }
-
-    (Here it is mostly to show supported fields and their types. In
-    practice you can (should) use code to generate this table. That's
-    the reason why configuration file is Lua code and not JSON.)
 
   <ResultsDir> - Path to directory where result files are written.
     Default: %s

@@ -13,7 +13,7 @@ return
       },
     How =
       {
-        ReadOnly = not false,
+        ReadOnly = false,
         Architectures = { 'esp8266' },
         Dependencies =
           {
