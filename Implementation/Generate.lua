@@ -1,9 +1,8 @@
--- Generate internal data for ArdunoIDE library descriptor
+-- Generate internal data for ArdunoIDE library descriptor file
 
 --[[
-  Status: writing
-  Version: 2
-  Last mod.: 2024-02-16
+  Version: 3
+  Last mod.: 2024-02-25
 ]]
 
 --[[
@@ -17,13 +16,28 @@
 --[[
   Not supported
 
-  * keywords.txt
+    * keywords.txt
 
-    I'm not gonna support generation of "keywords.txt" file at all.
-    Murky specification, forced .tsv format, dead-end toolpath.
+      I'm not gonna support generation of "keywords.txt" file at all.
+      Murky specification, forced .tsv format, dead-end toolpath.
 
-    It's 2024 here and I hope ArduinoIDE team will find a means
-    to determine name/type of code entities in this century.
+      It's 2024 here and I hope ArduinoIDE team will find means
+      to determine name/type of code entities in this century.
+
+  Not recommended (for ArduinoIDE 2.3.1)
+
+    * How.ReadOnly == false
+
+      Changeable libraries not actually supported in this ArduinoIDE.
+
+      Setting <ReadOnly> to false creates ".development" flag file.
+      You can open and change files from "examples/" directory of library.
+      You can even compile and upload them.
+
+      But you can not save them! IDE will offer to save example as new
+      sketch.
+
+      So I do recommend keeping ReadOnly == true.
 ]]
 
 --[[
@@ -42,165 +56,64 @@
 
 local AnnotatedLinesFormat = request('AnnotatedLines.Interface')
 
-local AssertNoNewlines = request('AnnotatedLines.string.assert_no_newlines')
-
---[[
-  Check library name.
-
-  Excerpts from
-
-    https://arduino.github.io/arduino-cli/0.35/library-specification/#libraryproperties-file-format
-
-  1. Library names must contain only basic letters (A-Z or a-z) and
-    numbers (0-9), spaces ( ), underscores (_), dots (.) and
-    dashes (-).
-
-  2. They must start with a letter or number.
-
-  3. They must contain at least one letter.
-
-  4. Note that libraries with a name value starting with Arduino will
-    no longer be allowed addition to the Library Manager index as
-    these names are now reserved for official Arduino libraries.
-]]
-local SerializeLibName =
-  function(LibName)
-    assert_string(LibName)
-
-    -- (1) and (2) are covered by <NamePattern>
-    local NamePattern = '^[%a%d][%a%d _.%-]*$'
-    local MatchesPattern = string.match(LibName, NamePattern)
-    if not MatchesPattern then
-      local ErrorMsgFmt =
-        "Library name doesn't match library name pattern.\n" ..
-        '  Library name: %s\n' ..
-        '  Pattern: %s\n'
-      local ErrorMsg = string.format(ErrorMsgFmt, LibName, NamePattern)
-      error(ErrorMsg)
-    end
-
-    -- (3) has letter
-    local HasLetter = (string.find(LibName, '%a') ~= nil)
-    if not HasLetter then
-      local ErrorMsgFmt =
-        'Library name must contain letter.\n' ..
-        '  Library name: %s\n'
-      local ErrorMsg = string.format(ErrorMsgFmt, LibName)
-      error(ErrorMsg)
-    end
-
-    -- (4) not starts with "Arduino"
-    --[[
-      Requirement (4) quite badly formulated as "ARDUINO" and "arduino"
-      will pass it.
-    ]]
-    local StartsWithArduino = (string.find(LibName, '^Arduino') ~= nil)
-    if StartsWithArduino then
-      local ErrorMsgFmt =
-        'Library name should not start with "Arduino".\n' ..
-        '  Library name: %s\n'
-      local ErrorMsg = string.format(ErrorMsgFmt, LibName)
-      error(ErrorMsg)
-    end
-
-    return LibName
-  end
-
-local SerializePerson =
-  function(Person)
-    assert_table(Person)
-    AssertNoNewlines(Person.Name)
-    return Person.Name
-  end
-
-local SerializePersons =
-  function(Persons)
-    assert_table(Persons)
-    local Results = {}
-    for _, Person in ipairs(Persons) do
-      table.insert(Results, SerializePerson(Person))
-    end
-    local Result = table.concat(Results, ", ")
-    return Result
-  end
+local SerializeLibName = request('ToString.SerializeLibName')
+local SerializePersons = request('ToString.SerializePersons')
+local SerializeDependencies =  request('ToString.SerializeDependencies')
 
 return
   function(self, Config)
     assert_table(Config)
 
-    local Keyvals =
-      {
-        name = SerializeLibName(Config.What.Name),
-        version = Config.What.Version,
-        category = Config.What.Category,
-        architectures = table.concat(Config.How.Architectures, ','),
-        sentence = Config.What.Description,
-        paragraph = Config.What.Description_Continued,
-        url = Config.What.MoreInfo_Url,
-        author = SerializePersons(Config.Who.Authors),
-        maintainer = SerializePersons(Config.Who.Maintainers),
-      }
+    local LibProps_Str = ''
+    do
+      local Lines = {}
 
-    local KeysOrder =
-      {
-        'name',
-        'version',
-        'category',
-        'architectures',
-        'sentence',
-        'paragraph',
-        'url',
-        'author',
-        'maintainer',
-      }
-
-    --[[
-      Do a pre-flight format check before serialization.
-
-      We are expected to have string value for every mentioned key.
-
-      Serialization method will raise error if key-value are not
-      strings (or if they contain newlines). So this pass is not
-      essential. Just for better error message for common case of nil
-      value.
-    ]]
-    for _, Key in ipairs(KeysOrder) do
-      assert_string(Key)
-
-      local Value = Keyvals[Key]
-      if not is_string(Value) then
-        if is_nil(Value) then
-          local ErrorMsgFmt = 'No value for key %q.'
-          local ErrorMsg = string.format(ErrorMsgFmt, Key)
-          error(ErrorMsg)
+      local Add =
+        function(Key, Value)
+          local Line = AnnotatedLinesFormat:SerializeKeyVal(Key, Value)
+          table.insert(Lines, Line)
         end
-        local ErrorMsgFmt = 'Value is not a string. (Key: %q, Value: %q)'
-        local ErrorMsg = string.format(ErrorMsgFmt, Key, tostring(Value))
-        error(ErrorMsg)
+
+      Add('name', SerializeLibName(Config.What.Name))
+      Add('version', Config.What.Version)
+      Add('category', Config.What.Category)
+      Add('architectures', table.concat(Config.How.Architectures, ','))
+      Add('sentence', Config.What.Description)
+      Add('paragraph', Config.What.Description_Continued)
+      Add('url', Config.What.MoreInfo_Url)
+      Add('author', SerializePersons(Config.Who.Authors))
+      Add('maintainer', SerializePersons(Config.Who.Maintainers))
+
+      local Depends_Str = SerializeDependencies(Config.How.Dependencies)
+      if (Depends_Str ~= '') then
+        Add('depends', Depends_Str)
       end
+
+      LibProps_Str = table.concat(Lines, '\n')
     end
-
-    --[[
-      Here we are passing two tables to serializer. If he's not happy
-      he will blow with error().
-    ]]
-    local LibPropsStr = AnnotatedLinesFormat:Save(Keyvals, KeysOrder)
-
-    assert_boolean(Config.How.ReadOnly)
-    local ReadOnly = Config.How.ReadOnly
 
     local Result_Create, Result_Remove = {}, {}
     do
-      local LibPropsFileName = 'library.properties'
-      local DevFlagFileName = '.development'
+      Result_Create['library.properties'] = LibProps_Str
 
-      Result_Create[LibPropsFileName] = LibPropsStr
-      if ReadOnly then
-        Result_Remove[DevFlagFileName] = ''
-      elseif not ReadOnly then
-        Result_Create[DevFlagFileName] = ''
+      -- Library is writable when ".development" file is present:
+      do
+        assert_boolean(Config.How.ReadOnly)
+        local ReadOnly = Config.How.ReadOnly
+
+        local Devflag_Fname = '.development'
+        if ReadOnly then
+          Result_Remove[Devflag_Fname] = ''
+        elseif not ReadOnly then
+          Result_Create[Devflag_Fname] = ''
+        end
       end
     end
 
     return Result_Create, Result_Remove
   end
+
+--[[
+  2024-02-16
+  2024-02-25
+]]

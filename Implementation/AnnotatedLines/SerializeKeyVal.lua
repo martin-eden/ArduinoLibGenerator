@@ -1,20 +1,18 @@
--- Serialize key-value pair
+-- Serialize key-value pair.
 
 --[[
-  Input
+  Arguments
 
-    Key: string
+    string -- Key
       No newlines, no "=".
 
-    Value: string
+    string -- Value
       No newlines.
 
-  Output
+  Returns
 
     string
 ]]
-
--- Last mod.: 2024-02-13
 
 local AssertNoNewlines = request('string.assert_no_newlines')
 local AssertNotContains = request('string.assert_not_contains')
@@ -28,8 +26,13 @@ return
     assert_string(Value)
     AssertNoNewlines(Value)
 
-    local Result =
-      string.format('%s=%s', Key, Value)
+    local FormatStr = "%s=%s"
+    local Result = string.format(FormatStr, Key, Value)
 
     return Result
   end
+
+--[[
+  2024-02-13
+  2024-02-25
+]]

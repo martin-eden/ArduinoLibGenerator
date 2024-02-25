@@ -1,4 +1,4 @@
-local Iam = { Name = 'Martin Eden',  Email = '' }
+local Iam = { Name = 'John Johnson',  Email = '' }
 
 return
   {
@@ -13,7 +13,7 @@ return
       },
     How =
       {
-        ReadOnly = false,
+        ReadOnly = true,
         Architectures = { 'esp8266' },
         Dependencies =
           {
