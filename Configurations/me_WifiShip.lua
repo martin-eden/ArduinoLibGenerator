@@ -71,7 +71,7 @@ local What =
       [[for coding delight. ]] ..
       [[Implemented as a wrapper over "ESP8266WiFi.h".]] ..
       [[]],
-    MoreInfo_Url = 'https://github.com/martin-eden/arduino_sketchbook/',
+    MoreInfo_Url = 'https://github.com/martin-eden/EmbeddedCpp_me_WifiShip',
   }
 
 --
@@ -86,11 +86,11 @@ local What =
 ]]
 local How =
   {
-    ReadOnly = false,
+    ReadOnly = true,
     Architectures = { Architectures.Esp8266 },
     Dependencies =
       {
-        { Name = '', VersionExpression = '' },
+        { Name = 'me_Types', VersionExpression = '=1.0.0' },
       },
   }
 -- ^ I'm leaving the fun of parsing version expressions to ArduinoIDE.

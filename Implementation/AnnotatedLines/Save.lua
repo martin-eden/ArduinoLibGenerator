@@ -3,31 +3,43 @@
 --[[
   Status: passed maiden flight
   Version: 1
-  Last mod.: 2024-02-13
+  Last mod.: 2024-02-15
 ]]
 
 --[[
-  Signature is
+  Arguments
 
-    (Data: table [, KeysOrder: table]): string
+      table -- Data
+    | table -- KeysOrder
 
-  Expected <Data> format for each key-value is
+  Returns
 
-    key: string
-    value: string
+    string
 
-  Nah, no integers, no booleans. Also no floats, tables, or userdata.
+  --
 
-  If <KeysOrder> is present it's format expected to be a table
-  sequence of key names (strings!).
+  Data:
 
-  We just iterate over this sequence, getting values from <Data> and
-  and serializing pairs by <SerializeKeyVal()>.
+    string: string, ...
+    ~~~~~~~ ~~~~~~
+      key    value
 
-  We don't care about duplicate keys or omitted keys this way.
+  KeysOrder:
 
-  If <KeysOrder> is not present, we will create it for suitable
-  (string type) key-value pairs in <Data>.
+    string, ...
+    ~~~~~~~~
+    key name
+
+  --
+
+  If <KeysOrder> is not present
+    Create it for string key-value pairs in <Data>
+
+  Iterate <Key> over <KeysOrder>
+    // We don't care about duplicate or omitted keys
+    <Value> = <Data>.<Key>
+    <Line> = Serialize(<Key>, <Value>)
+    <Result> = <Result> + '\n' + <Line>
 ]]
 
 local GetKeys = request('!.table.get_keys')
@@ -66,3 +78,8 @@ return
 
     return Result
   end
+
+--[[
+  2024-02-13
+  2024-02-25
+]]
