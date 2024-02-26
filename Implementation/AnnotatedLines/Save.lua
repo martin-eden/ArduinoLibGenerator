@@ -2,8 +2,8 @@
 
 --[[
   Status: passed maiden flight
-  Version: 1
-  Last mod.: 2024-02-15
+  Version: 2
+  Last mod.: 2024-02-28
 ]]
 
 --[[
@@ -44,9 +44,11 @@
 
 local GetKeys = request('!.table.get_keys')
 local CompareKeys = request('!.table.ordered_pass.default_comparator')
+local SerializeKeyVal = request('Compiler.SerializeKeyVal')
+local LinesToString = request('!.string.from_lines')
 
 return
-  function(self, Data, KeysOrder)
+  function(Data, KeysOrder)
     assert_table(Data)
 
     --[[
@@ -62,19 +64,19 @@ return
 
     assert_table(KeysOrder)
 
-    local Result = ''
-
     local Lines = {}
 
     for _, Key in ipairs(KeysOrder) do
       local Value = Data[Key]
       if is_string(Key) and is_string(Value) then
-        local Line = self:SerializeKeyVal(Key, Value)
+        local Line = SerializeKeyVal(Key, Value)
         table.insert(Lines, Line)
       end
     end
 
-    Result = table.concat(Lines, '\n')
+    local Result = ''
+
+    Result = LinesToString(Lines)
 
     return Result
   end
@@ -82,4 +84,5 @@ return
 --[[
   2024-02-13
   2024-02-25
+  2024-02-28
 ]]

@@ -1,35 +1,41 @@
--- Parse annotated strings format
+-- Parse annotated lines
 
 --[[
-  No duplicate keys in output. We're keeping the last value.
+  Input
 
-  Sample input
+    string
 
-    a=a 1
-    b=b 1
-    a=a 2
+      Annotated lines. Usually contents of file.
 
-  Sample output
+  Output
 
-    {
-      a = 'a 2',
-      b = 'b 1',
-    }
+    table
+
+      Parsed contents in table indexed by key names.
+
+  Special case
+
+    If there are duplicate keys in output
+
+      We're keeping the last value
+
+  Example
+
+    Load('a=1'.. '\n' .. 'b=2' .. '\n' .. 'a=3') ->
+      { ['a'] = '3', ['b'] = '2' }
 ]]
 
---[[
-  Version: 1
-  Last mod.: 2024-02-15
-]]
+-- Last mod.: 2024-02-28
 
-local SplitStringToLines = request('!.string.split_to_lines')
 local IterateLines = request('!.string.lines')
+local ParseLine = request('Parser.ParseLine')
 
 return
-  function(self, DataString)
+  function(DataString)
     assert_string(DataString)
 
     local Result = {}
+
     for _, Line in IterateLines(DataString) do
       local Key, Value = ParseLine(Line)
 
@@ -40,3 +46,8 @@ return
 
     return Result
   end
+
+--[[
+  2028-02-15
+  2025-02-28
+]]

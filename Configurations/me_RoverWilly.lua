@@ -31,7 +31,8 @@ return
         Architectures = { Architectures.Esp8266 },
         Dependencies =
           {
-            { Name = '', VersionExpression = '' },
+            { Name = 'Adafruit MPU6050', VersionExpression = '>=2.2.4' },
+            { Name = 'ArduinoJson', VersionExpression = '>=7.0.3' },
           },
       },
     Who =

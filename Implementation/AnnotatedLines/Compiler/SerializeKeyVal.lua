@@ -1,7 +1,7 @@
--- Serialize key-value pair.
+-- Serialize key-value pair. Annotated lines format.
 
 --[[
-  Arguments
+  Input
 
     string -- Key
       No newlines, no "=".
@@ -9,16 +9,18 @@
     string -- Value
       No newlines.
 
-  Returns
+  Output
 
     string
 ]]
 
-local AssertNoNewlines = request('string.assert_no_newlines')
-local AssertNotContains = request('string.assert_not_contains')
+-- Last mod.: 2024-02-28
+
+local AssertNoNewlines = request('^.string.assert_no_newlines')
+local AssertNotContains = request('^.string.assert_not_contains')
 
 return
-  function(self, Key, Value)
+  function(Key, Value)
     assert_string(Key)
     AssertNoNewlines(Key)
     AssertNotContains(Key, '=')
@@ -35,4 +37,5 @@ return
 --[[
   2024-02-13
   2024-02-25
+  2024-02-28
 ]]
