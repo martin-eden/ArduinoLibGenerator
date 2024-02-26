@@ -1,9 +1,8 @@
--- Configuration data for ArduinoLibGenerator
+-- Configuration data for me_WifiShip library
 
 --[[
-  Status: designing
-  Version: 1
-  Last mod.: 2024-02-11
+  Version: 2
+  Last mod.: 2024-02-26
 ]]
 
 --[[
@@ -93,7 +92,7 @@ local How =
         { Name = 'me_Types', VersionExpression = '=1.0.0' },
       },
   }
--- ^ I'm leaving the fun of parsing version expressions to ArduinoIDE.
+-- ^ I'm leaving the joy of parsing version expressions to ArduinoIDE.
 
 --
 -- Who

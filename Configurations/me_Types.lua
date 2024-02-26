@@ -1,4 +1,4 @@
--- Configuration data for me_Types
+-- Configuration data for me_Types library
 
 --[[
   Version: 1
