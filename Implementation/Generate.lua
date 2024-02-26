@@ -70,7 +70,7 @@ return
 
       local Add =
         function(Key, Value)
-          local Line = AnnotatedLinesFormat:SerializeKeyVal(Key, Value)
+          local Line = AnnotatedLinesFormat.SerializeKeyVal(Key, Value)
           table.insert(Lines, Line)
         end
 
