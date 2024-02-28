@@ -54,7 +54,7 @@
     architectures=*
 ]]
 
-local AnnotatedLinesFormat = request('AnnotatedLines.Interface')
+local AnnotatedLinesFormat = request('!.concepts.AnnotatedLines.Interface')
 
 local SerializeLibName = request('ToString.SerializeLibName')
 local SerializePersons = request('ToString.SerializePersons')

@@ -1,6 +1,6 @@
 -- Serialize person
 
-local AssertNoNewlines = request('^.AnnotatedLines.string.assert_no_newlines')
+local AssertNoNewlines = request('!.string.assert_no_newlines')
 
 return
   function(Person)
