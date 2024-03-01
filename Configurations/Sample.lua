@@ -1,10 +1,16 @@
+--[[
+  For list of categories and version expressions go to
+
+    https://arduino.github.io/arduino-cli/0.35/library-specification/
+]]
+
 local Iam = { Name = 'John Johnson',  Email = '' }
 
 return
   {
     What =
       {
-        Name = 'YourLibbaName',
+        Name = 'MyLibbaName',
         Version = '1.0.0', -- Semver
         Category = 'Uncategorized',
         Description = 'First line of description.',
@@ -13,11 +19,10 @@ return
       },
     How =
       {
-        ReadOnly = true,
         Architectures = { 'esp8266' },
         Dependencies =
           {
-            { Name = '', VersionExpression = '' },
+            -- { Name = 'ArduinoJson', VersionExpression = '>=7.0.3' },
           },
       },
     Who =

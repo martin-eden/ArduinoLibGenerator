@@ -1,8 +1,8 @@
 -- Generate internal data for ArdunoIDE library descriptor file
 
 --[[
-  Version: 3
-  Last mod.: 2024-02-25
+  Version: 4
+  Last mod.: 2024-02-29
 ]]
 
 --[[
@@ -24,20 +24,16 @@
       It's 2024 here and I hope ArduinoIDE team will find means
       to determine name/type of code entities in this century.
 
-  Not recommended (for ArduinoIDE 2.3.1)
+    * ".development" flag file
 
-    * How.ReadOnly == false
+      Presence of this file assumes that you can change library source
+      files and examples.
 
-      Changeable libraries not actually supported in this ArduinoIDE.
+      But practically it's unusable as in ArduinoIDE 2.3.1 you can't
+      save them.
 
-      Setting <ReadOnly> to false creates ".development" flag file.
-      You can open and change files from "examples/" directory of library.
-      You can even compile and upload them.
-
-      But you can not save them! IDE will offer to save example as new
-      sketch.
-
-      So I do recommend keeping ReadOnly == true.
+      (Originally I've implemented logic for creation of this file.
+      But dropping it now. Less is better.)
 ]]
 
 --[[
@@ -61,7 +57,7 @@ local SerializePersons = request('ToString.SerializePersons')
 local SerializeDependencies =  request('ToString.SerializeDependencies')
 
 return
-  function(self, Config)
+  function(Config)
     assert_table(Config)
 
     local LibProps_Str = ''
@@ -92,28 +88,15 @@ return
       LibProps_Str = table.concat(Lines, '\n')
     end
 
-    local Result_Create, Result_Remove = {}, {}
-    do
-      Result_Create['library.properties'] = LibProps_Str
+    local Result_Create = {}
 
-      -- Library is writable when ".development" file is present:
-      do
-        assert_boolean(Config.How.ReadOnly)
-        local ReadOnly = Config.How.ReadOnly
+    Result_Create['library.properties'] = LibProps_Str
 
-        local Devflag_Fname = '.development'
-        if ReadOnly then
-          Result_Remove[Devflag_Fname] = ''
-        elseif not ReadOnly then
-          Result_Create[Devflag_Fname] = ''
-        end
-      end
-    end
-
-    return Result_Create, Result_Remove
+    return Result_Create
   end
 
 --[[
   2024-02-16
   2024-02-25
+  2024-02-29
 ]]
