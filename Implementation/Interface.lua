@@ -1,8 +1,11 @@
 return
   {
+    -- Configuration defaults
+    ResultsDir = 'Results/',
+    ConfigurationFilename = '',
+    -- Main
     Run = request('Run'),
-    --
-    LoadConfiguration = request('LoadConfiguration'),
-    Generate = request('Generate'),
-    SaveResults = request('SaveResults'),
+    -- Help texts for CLI
+    GetUsageText = request('GetUsageText'),
+    GetConfigurationExample = request('GetConfigurationExample'),
   }

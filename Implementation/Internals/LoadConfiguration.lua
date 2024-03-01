@@ -1,15 +1,14 @@
 -- Load and process configuration
 
 --[[
-  Status: in writing
-  Version: 0
-  Last mod.: 2024-02-11
+  Version: 1
+  Last mod.: 2024-02-29
 ]]
 
 local FileExists = request('!.file_system.file.exists')
 
 return
-  function(self, ConfigPathName)
+  function(ConfigPathName)
     if not FileExists(ConfigPathName) then
       local ErrorMsg =
         ([[Configuration file "%s" does not exist.]]):
@@ -19,6 +18,7 @@ return
     end
 
     local Config = dofile(ConfigPathName)
+
     if not is_table(Config) then
       local ErrorMsg =
         ('Results of execution configuration file "%s" is %s not a Lua table.'):
@@ -29,3 +29,8 @@ return
 
     return Config
   end
+
+--[[
+  2024-02-11
+  2024-02-29
+]]

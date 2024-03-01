@@ -1,91 +1,40 @@
 -- ArduinoLibGenerator external entry point
 
 --[[
-  Version: 2
-  Last mod.: 2024-02-19
+  Version: 3
+  Last mod.: 2024-02-29
 ]]
 
 package.path = package.path .. ';../../workshop/?.lua'
 require('base')
 
-local AddSlashToDirName = request('!.string.file_name.add_dir_postfix')
+local Implementation = request('Implementation.Interface')
 
-local DefaultResultsDir = 'Results/'
-
--- Command-line arguments [
-local ConfigurationFileName = arg[1]
-local ResultsDir = arg[2] or DefaultResultsDir
-ResultsDir = AddSlashToDirName(ResultsDir)
--- ]
-
-local PrintUsage =
-  function()
-    local UsageTextFmt =
-[[
-# ArduinoLibGenerator
-
-What
-
-  Generate "library.properties" file from description in Lua table.
-
-Usage
-
-  $ lua Run.lua <ConfigurationFileName_Lua> [<ResultsDir>]
-
-Parameters
-
-  <ConfigurationFileName_Lua> - .lua file which returns table with
-    library description.
-
-    Example:
-
-      local Iam = { Name = 'Martin Eden',  Email = '' }
-
-      return
-        {
-          What =
-            {
-              Name = 'YourLibbaName',
-              Version = '1.0.0', -- Semver
-              Category = 'Uncategorized',
-              Description = 'First line of description.',
-              Description_Continued = 'Second line of description.',
-              MoreInfo_Url = 'https://url-for-more.info',
-            },
-          How =
-            {
-              ReadOnly = false,
-              Architectures = { 'esp8266' },
-              Dependencies =
-                {
-                  { Name = '', VersionExpression = '' },
-                },
-            },
-          Who =
-            {
-              Authors = { Iam },
-              Maintainers = { Iam },
-            },
-        }
-
-  <ResultsDir> - Path to directory where result files are written.
-    Default: %s
-
-    We write "library.properties" and maybe ".development" files there.
-
-    You can copy move to directory with your library for ArduinoIDE.
-
--- Martin, 2024-02-16
-]]
-    local UsageText = string.format(UsageTextFmt, DefaultResultsDir)
-    print(UsageText)
-  end
-
-if is_nil(ConfigurationFileName) then
-  PrintUsage()
+if is_nil(arg[1]) then
+  print(Implementation:GetUsageText())
   return
 end
 
-local Implementation = request('Implementation.Interface')
+if (arg[1] == '--print-example') then
+  io.write(Implementation:GetConfigurationExample())
+  return
+end
 
-Implementation:Run(ConfigurationFileName, ResultsDir)
+-- Command-line arguments (
+local ConfigurationFilename = arg[1]
+local ResultsDir = arg[2]
+-- )
+
+assert_string(ConfigurationFilename)
+Implementation.ConfigurationFilename = ConfigurationFilename
+
+if is_string(ResultsDir) then
+  Implementation.ResultsDir = ResultsDir
+end
+
+Implementation:Run()
+
+--[[
+  2024-02-19
+  2024-02-29
+]]
