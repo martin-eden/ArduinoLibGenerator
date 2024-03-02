@@ -1,6 +1,30 @@
 -- ArduinoLibGenerator external entry point
 
 --[[
+  Input
+
+    sequence of strings - command-line arguments
+
+      Only one parameter is required - <ConfigurationFileName>
+      Second one is optional - <ResultsDir>
+
+      if (arg[1] == nil)
+        print help
+      if (arg[1] == "--print-example")
+        print example configuration
+      else
+        ConfigurationFileName = arg[1]
+        if (arg[2] == nil)
+          ResultsDir = Defaults.ResultsDir
+        else
+          ResultsDir = arg[2]
+
+  Output
+
+    Creates files and directories
+    Prints to stdout
+]]
+
   Version: 3
   Last mod.: 2024-02-29
 ]]
