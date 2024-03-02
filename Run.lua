@@ -25,12 +25,13 @@
     Prints to stdout
 ]]
 
+--[[
   Version: 3
-  Last mod.: 2024-02-29
+  Last mod.: 2024-03-02
 ]]
 
-package.path = package.path .. ';../../workshop/?.lua'
-require('base')
+-- package.path = package.path .. ';../../?.lua'
+require('workshop.base')
 
 local Implementation = request('Implementation.Interface')
 
@@ -61,4 +62,5 @@ Implementation:Run()
 --[[
   2024-02-19
   2024-02-29
+  2024-03-02
 ]]
