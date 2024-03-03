@@ -27,11 +27,17 @@
 
 --[[
   Version: 3
-  Last mod.: 2024-03-02
+  Last mod.: 2024-03-03
 ]]
 
--- package.path = package.path .. ';../../?.lua'
+--[[ Load development [workshop]:
+package.path = package.path .. ';../../?.lua'
 require('workshop.base')
+--]]
+
+--[[ Load built-in [workshop]: ]]
+require('Implementation.workshop.base')
+--]]
 
 local Implementation = request('Implementation.Interface')
 
