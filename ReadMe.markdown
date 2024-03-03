@@ -1,20 +1,31 @@
 # ArduinoLibGenerator -- Generate library description files for ArduinoIDE
 
-WIP, project is not released
+Status: ready to release
+
+Last mod.: 2023-03-02
 
 ## Requirements
 
-* Lua 5.4
-* [Workshop](https://github.com/martin-eden/workshop)
+* Linux
+* Lua 5.4 (should work with 5.3 too)
 
 ## First launch
 
-1. Clone repo
-2. Install requirements
+1. Clone
+2. `lua Run.lua`
+
+  Will print usage help.
+
 3. `lua Run.lua Configurations/Sample.lua`
 
-  Result will be in "Results/" directory. (Directory will be created,
-  don't worry.)
+  Will generate "library.properties" and place it in "Results/"
+  directory:
+
+  ```
+  ArduinoLibGenerator --(
+  Created file "Results/library.properties".
+  )--
+  ```
 
 ## Background
 
@@ -36,4 +47,4 @@ description in Lua table.
 
 * [My other repositories](https://github.com/martin-eden/contents).
 
--- Martin, 2024-02-11/2024-02-28
+-- Martin, 2024-02-11/2024-03-02
