@@ -5,7 +5,7 @@
   To make this function less boring.
 ]]
 
--- Last mod.: 2024-02-29
+-- Last mod.: 2024-03-03
 
 local StringFromFile = request('!.file_system.file.as_string')
 local StringToLines = request('!.string.to_lines')
@@ -15,7 +15,7 @@ return
   function()
     local Result = ''
 
-    local ExampleFileName = 'Configurations/Sample.lua'
+    local ExampleFileName = self.ConfigurationFilename
 
     local FileContents = ''
 

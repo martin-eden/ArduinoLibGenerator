@@ -1,11 +1,21 @@
 -- Load and process configuration
 
 --[[
-  Version: 1
-  Last mod.: 2024-02-29
+  Input
+
+    string - pathname to file
+
+  Output
+
+    string - contents of file
+
+  As with [SaveResults], no processing here. Only file I/O business.
 ]]
 
+-- Last mod.: 2024-03-03
+
 local FileExists = request('!.file_system.file.exists')
+local FileAsString = request('!.file_system.file.as_string')
 
 return
   function(ConfigPathName)
@@ -17,20 +27,13 @@ return
       error(ErrorMsg)
     end
 
-    local Config = dofile(ConfigPathName)
+    local ConfigContents = FileAsString(ConfigPathName)
 
-    if not is_table(Config) then
-      local ErrorMsg =
-        ('Results of execution configuration file "%s" is %s not a Lua table.'):
-        format(ConfigPathName, type(Config))
-
-      error(ErrorMsg)
-    end
-
-    return Config
+    return ConfigContents
   end
 
 --[[
   2024-02-11
   2024-02-29
+  2024-03-03
 ]]

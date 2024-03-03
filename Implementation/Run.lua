@@ -2,16 +2,14 @@
 
 --[[
   Version: 4
-  Last mod.: 2024-02-17
+  Last mod.: 2024-03-03
 ]]
 
 --[[
   v Load configuration
   v Generate data (with filename)
-  v Save save data to result directory
+  v Save save data to results directory
 ]]
-
-local AddSlashToDirName = request('!.string.file_name.add_dir_postfix')
 
 --[[
   Methods to parse/generate/compile "library.properties" were created
@@ -24,28 +22,38 @@ local AddSlashToDirName = request('!.string.file_name.add_dir_postfix')
 ]]
 
 local LoadConfiguration = request('Internals.LoadConfiguration')
-local Generate = request('Internals.Generate')
+local Decompile = request('Internals.Decompile')
+local Compile = request('Internals.Compile')
 local SaveResults = request('Internals.SaveResults')
 
 return
   function(self)
     local ConfigurationPathName = self.ConfigurationFilename
     local ResultsDir = self.ResultsDir
+    local DoDecompile = self.DoDecompile
 
     assert_string(ConfigurationPathName)
     assert_string(ResultsDir)
+    assert_boolean(DoDecompile)
 
-    ResultsDir = AddSlashToDirName(ResultsDir)
+    do
+      local Configuration = LoadConfiguration(ConfigurationPathName)
+      assert_string(Configuration)
 
-    local Configuration = LoadConfiguration(ConfigurationPathName)
-    assert_table(Configuration)
+      local DirTree_Create
+      if DoDecompile then
+        DirTree_Create = Decompile(Configuration)
+      else
+        DirTree_Create = Compile(Configuration)
+      end
+      assert_table(DirTree_Create)
 
-    local DirTree_Create = Generate(Configuration)
-
-    SaveResults(DirTree_Create, ResultsDir)
+      SaveResults(DirTree_Create, ResultsDir)
+    end
   end
 
 --[[
   2024-02-17
   2024-02-29
+  2024-03-03
 ]]

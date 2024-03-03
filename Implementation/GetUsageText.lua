@@ -5,6 +5,8 @@
   result.
 ]]
 
+-- Last mod.: 2024-03-03
+
 local UsageTextFmt =
 [[
 # ArduinoLibGenerator
@@ -14,10 +16,6 @@ description in Lua file.
 
 Usage
 
-  Generate
-
-    $ lua Run.lua <ConfigurationFileName_Lua> [<ResultsDir>]
-
   Print help
 
     $ lua Run.lua
@@ -26,20 +24,31 @@ Usage
 
     $ lua Run.lua --print-example
 
+  Compile
+
+    $ lua Run.lua <ConfigurationFileName> [<ResultsDir>]
+
+  Decompile
+
+    $ lua Run.lua --decompile <ConfigurationFileName> [<ResultsDir>]
+
 Parameters
 
-  <ConfigurationFileName_Lua>
+  <ConfigurationFileName>
 
-    ".lua" file which is executed and expected to return table with
-    library description.
+    When compiling, it's ".lua" file which is executed and expected to
+    return table with library description.
+
+    When decompiling, it's ".properties" text file which is expected to
+    contain library description.
 
   <ResultsDir>
 
-    Path to directory where generated "library.properties" file is placed.
+    Path to directory where generated file is placed.
 
     Default: "%s"
 
--- Martin, 2024-02-16/2024-03-02
+-- Martin, 2024-02-16/2024-03-03
 ]]
 
 return
@@ -50,3 +59,8 @@ return
 
     return Result
   end
+
+--[[
+  2024-03-01
+  2024-03-03
+]]

@@ -1,5 +1,33 @@
 -- Serialize list of dependencies
 
+--[[
+  Input
+
+    table
+
+      Sequence of records in following format:
+
+        Name: string
+        VersionExpression: string
+
+  Output
+
+    string
+
+      Serialized list of dependencies. CSV.
+
+  Special cases
+
+    If <Name> == ''
+      Skip record processing
+    If <VersionExpression> == ''
+      Skip version field processing
+
+    Empty table is serialized to empty string: ''
+]]
+
+-- Last mod.: 2024-03-03
+
 return
   function(Dependencies)
     assert_table(Dependencies)
@@ -30,3 +58,7 @@ return
 
     return Result
   end
+
+--[[
+  2024-02-25
+]]
