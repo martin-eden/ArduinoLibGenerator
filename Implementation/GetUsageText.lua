@@ -10,7 +10,7 @@ local UsageTextFmt =
 # ArduinoLibGenerator
 
 Generates "library.properties" file for ArduinoIDE from library
-description in Lua table.
+description in Lua file.
 
 Usage
 
@@ -39,7 +39,7 @@ Parameters
 
     Default: "%s"
 
--- Martin, 2024-02-16/2024-02-29
+-- Martin, 2024-02-16/2024-03-02
 ]]
 
 return
