@@ -1,8 +1,11 @@
 -- Sample configuration file
 
 --[[
-  We use Lua to return configuration table. This allows us to move
-  constant strings to table and reference them by shorter name.
+  We use Lua to return configuration table.
+
+  This allows us to use language facilities to
+  describe value options as tables, move them to standalone files,
+  load and then reference by shorter name.
 
   Also we are using the same person record <Iam> both in list
   of authors and maintainers.
@@ -20,21 +23,26 @@ return
         Name = 'MyLibbaName',
         Version = '1.0.0', -- Semver
         Category = Categories.Unset,
-        Description = 'First line of description.',
-        Description_Continued = 'Second line of description.',
-        MoreInfo_Url = 'https://url-for-more.info',
+        Description =
+          'Episode IV. A NEW HOPE',
+        Description_Continued =
+          [[It is a period of civil war.]] ..
+          [[ Rebel spaceships, striking]] ..
+          [[ from a hidden base, have won]] ..
+          [[ their first victory against]] ..
+          [[ the evil Galactic Empire.]] ..
+          [[]],
+        MoreInfo_Url =
+          'https://url-for-more.info',
       },
     How =
       {
-        Architectures = { Architectures.Esp8266 },
+        Architectures = { Architectures.Any },
         Dependencies =
           {
             -- { Name = 'ArduinoJson', VersionExpression = '>=7.0.3' },
           },
       },
     Who =
-      {
-        Authors = { Iam },
-        Maintainers = { Iam },
-      },
+      { Authors = { Iam }, Maintainers = { Iam } },
   }
