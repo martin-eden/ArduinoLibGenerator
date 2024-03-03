@@ -1,4 +1,8 @@
-Results/
-CreateDeployScript.lua
-deploy.sh
-deploy/
+/CreateDeployScript.lua
+/deploy.sh
+/deploy/
+
+/Configurations/*
+!/Configurations/Common/
+!/Configurations/Common/*
+!/Configurations/Sample.lua
