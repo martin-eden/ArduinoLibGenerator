@@ -40,7 +40,7 @@ return
         Architectures = { Architectures.Any },
         Dependencies =
           {
-            -- { Name = 'ArduinoJson', VersionExpression = '>=7.0.3' },
+            -- { Name = 'ArduinoJson', VersionExpr = '>=7.0.3' },
           },
       },
     Who =

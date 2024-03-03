@@ -39,28 +39,19 @@
 
       (Originally I've implemented support for this flag. But then
       dropped it. Less is better.)
-
---[[
-  Sample library.properties:
-
-    name=ArduinoJson
-    version=7.0.3
-    author=Benoit Blanchon <blog.benoitblanchon.fr>
-    maintainer=Benoit Blanchon <blog.benoitblanchon.fr>
-    sentence=A simple and efficient JSON library for embedded C++.
-    paragraph=⭐ 6463 stars on GitHub! Supports serialization, deserialization, MessagePack, streams, filtering, and more. Fully tested and documented.
-    category=Data Processing
-    url=https://arduinojson.org/?utm_source=meta&utm_medium=library.properties
-    architectures=*
 ]]
 
--- Last mod.: 2024-03-03
+-- Last mod.: 2024-03-05
 
 local AnnotatedLinesFormat = request('!.concepts.AnnotatedLines.Interface')
+local StringFromLines = request('!.string.from_lines')
 
-local SerializeLibName = request('ToString.SerializeLibName')
-local SerializePersons = request('ToString.SerializePersons')
-local SerializeDependencies =  request('ToString.SerializeDependencies')
+local CheckRequiredFields = request('Parts.CheckLibrary_Lua')
+local CheckLibName = request('Parts.Core.CheckLibName')
+
+local SerializePersons = request('Parts.SerializePersons')
+local SerializeDependencies = request('Parts.SerializeDependencies')
+local SerializeArchitectures = request('Parts.SerializeArchitectures')
 
 return
   function(ConfigContents)
@@ -87,8 +78,32 @@ return
         local ErrorMsg = string.format(ErrorMsgFmt, type(Config))
         error(ErrorMsg)
       end
+
+      local IsOkay, Messages = CheckRequiredFields(Config)
+      if not IsOkay then
+        print('Problems with loaded Lua structure --(')
+        io.write(StringFromLines(Messages))
+        print(')--')
+        return {}
+      end
     end
     assert_table(Config)
+
+    --[[
+      Check library name for formal requirements.
+      If it does not conform to official specification,
+      just print message and continue. Hello, "ArduinoJson"!.
+    ]]
+    do
+      local LibName = Config.What.Name
+      local NameIsOkay, Complain = CheckLibName(LibName)
+      if not NameIsOkay then
+        local MessageFmt =
+          'Library name "%s" does not conform to specification: %s'
+        local Message = string.format(MessageFmt, LibName, Complain)
+        print(Message)
+      end
+    end
 
     local LibProps_Str
     do
@@ -100,10 +115,10 @@ return
 
       local LibProps =
         {
-          name = SerializeLibName(Config.What.Name),
+          name = Config.What.Name,
           version = Config.What.Version,
           category = Config.What.Category,
-          architectures = table.concat(Config.How.Architectures, ','),
+          architectures = SerializeArchitectures(Config.How.Architectures),
           sentence = Config.What.Description,
           paragraph = Config.What.Description_Continued,
           url = Config.What.MoreInfo_Url,
@@ -137,10 +152,10 @@ return
     only to "require()". But that's enough for any evil code.
 
     The user is me and I want "require()" and "print()" and maybe all
-    "math.". And most probably all other things.
+    "math.". And most probably some other things.
 
     I'm not going to build sandbox for myself. I'm responsible for what
-    my code is doing on my machine.
+    my code is doing on my machine. Amen.
 ]]
 
 --[[
@@ -148,4 +163,5 @@ return
   2024-02-25
   2024-02-29
   2024-03-03
+  2024-03-05
 ]]
