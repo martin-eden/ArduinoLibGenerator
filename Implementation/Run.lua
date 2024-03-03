@@ -22,8 +22,8 @@
 ]]
 
 local LoadConfiguration = request('Internals.LoadConfiguration')
-local Decompile = request('Internals.Decompile')
-local Compile = request('Internals.Compile')
+local Parse = request('Internals.Parse')
+local Serialize = request('Internals.Serialize')
 local SaveResults = request('Internals.SaveResults')
 
 return
@@ -42,9 +42,9 @@ return
 
       local DirTree_Create
       if DoDecompile then
-        DirTree_Create = Decompile(Configuration)
+        DirTree_Create = Parse(Configuration)
       else
-        DirTree_Create = Compile(Configuration)
+        DirTree_Create = Serialize(Configuration)
       end
       assert_table(DirTree_Create)
 

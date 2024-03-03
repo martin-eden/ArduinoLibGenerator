@@ -4,13 +4,14 @@
 
 Status: ready to release
 
-Last mod.: 2023-03-02
+Last mod.: 2023-03-04
 
-Example input: [Sample.lua](Configurations/Sample.lua)
+Example input: [Configurations/Sample.lua](Configurations/Sample.lua)
 
-Example output: [library.properties](Results/library.properties)
+Example output: [Results/library.properties](Results/library.properties)
 
-"library.properties" format [specification][libprops.spec].
+Official format specification:
+  [arduino.github.io/arduino-cli/0.36/library-specification/][libprops.spec].
 
 ## Requirements
 
