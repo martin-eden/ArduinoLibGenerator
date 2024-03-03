@@ -5,14 +5,14 @@
   But you can rename fields for your convenience.
 ]]
 
--- Last mod.: 2024-03-02
+-- Last mod.: 2024-03-03
 
 return
   {
     Unset = 'Uncategorized',
     Other = 'Other',
 
-    SignalIO = 'Signal Input/Output',
+    SignalIo = 'Signal Input/Output',
     DeviceControl = 'Device Control',
     Timing = 'Timing',
     Sensors = 'Sensors',
