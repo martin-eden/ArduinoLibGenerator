@@ -1,3 +1,7 @@
+-- ArduinoLibGenerator API
+
+-- Nothing to see here. Core code at "Internals/Generate.lua".
+
 return
   {
     -- Configuration defaults
