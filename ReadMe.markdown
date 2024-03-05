@@ -2,13 +2,13 @@
 
 ## Generate library description files for ArduinoIDE
 
-Status: ready to release
+Status: released
 
-Last mod.: 2023-03-04
+Last mod.: 2023-03-05
 
-Example input: [Configurations/Sample.lua](Configurations/Sample.lua)
+Example input: [Configurations/Sample.lua][sample.lua]
 
-Example output: [Results/library.properties](Results/library.properties)
+Example output: [Results/library.properties][libprops]
 
 Official format specification:
   [arduino.github.io/arduino-cli/0.36/library-specification/][libprops.spec].
@@ -36,6 +36,33 @@ Official format specification:
     )--
     ```
 
+## What else it can do
+
+There is not much joy in writing tool that converts "A" to "B".
+Joy is when it can convert "B" back to "A".
+
+So I've implemented parser of "library.properties" to Lua table.
+And used table serializer I wrote like 8 years ago...
+
+`lua Run.lua --decompile Results/library.properties`
+
+  ```
+  ArduinoLibGenerator --(
+  Created file "Results/library.configuration.lua".
+  )--
+  ```
+[Generated file.][libprops.lua]
+
+Not the same data as original but will compile back to the same
+"library.properties".
+
+Now you can load descriptions from existing ArduinoIDE libraries,
+process them and write back if you wish. Find the most quoted author,
+the longest description, the most popular version or just skim
+for emails from those who were naive enough to publish them.
+
+Happy hacking!
+
 ## Background
 
 Tinkering with Arduino Uno yielded to programming in C++ and
@@ -56,7 +83,10 @@ description in Lua table.
 
 * [My other repositories](https://github.com/martin-eden/contents).
 
--- Martin, 2024-02-11/2024-03-02
+-- Martin, 2024-02-11/2024-03-05
 
 [install.lua]: https://gist.github.com/martin-eden/4d3d1677244234e6501654cb32316305
 [libprops.spec]: https://arduino.github.io/arduino-cli/0.36/library-specification/
+[sample.lua]: Configurations/Sample.lua
+[libprops]: Results/library.properties
+[libprops.lua]: Results/library.configuration.lua
