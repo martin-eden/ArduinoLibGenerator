@@ -12,7 +12,7 @@ local StringToLines = request('!.string.to_lines')
 local StringFromLines = request('!.string.from_lines')
 
 return
-  function()
+  function(self)
     local Result = ''
 
     local ExampleFileName = self.ConfigurationFilename
