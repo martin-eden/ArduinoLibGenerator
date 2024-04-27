@@ -28,7 +28,7 @@
     // We don't care about validity of library name and <VersionExpr> semantics
 ]]
 
--- Last mod.: 2024-03-24
+-- Last mod.: 2024-03-28
 
 local Trim = request('!.string.trim')
 local RTrim = request('!.string.trim_tail')
@@ -53,7 +53,7 @@ return
         VersionExpr = ''
       end
       -- Drop the external parenthesis
-      if (string.length(VersionExpr) >= 2) then
+      if (string.len(VersionExpr) >= 2) then
         VersionExpr = string.sub(VersionExpr, 2, -2)
       end
       -- Drop spaces on sides
