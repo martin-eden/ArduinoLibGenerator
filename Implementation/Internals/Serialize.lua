@@ -46,7 +46,7 @@
 local AnnotatedLinesFormat = request('!.concepts.AnnotatedLines.Interface')
 local StringFromLines = request('!.string.from_lines')
 
-local CheckRequiredFields = request('Parts.CheckLibrary_Lua')
+local CheckRequiredFields = request('Parts.CheckStructure_Lua')
 local CheckLibName = request('Parts.CheckLibName')
 
 local SerializePersons = request('Parts.Persons.Pack')
