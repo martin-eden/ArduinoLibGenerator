@@ -17,7 +17,7 @@
 local AnnotatedLinesFormat = request('!.concepts.AnnotatedLines.Interface')
 local StringFromLines = request('!.string.from_lines')
 
-local CheckRequiredFields = request('Parts.CheckLibrary_AnnotatedLines')
+local CheckRequiredFields = request('Parts.CheckStructure_AnnotatedLines')
 local CheckLibName = request('Parts.CheckLibName')
 
 local ParsePersons = request('Parts.Persons.Unpack')
