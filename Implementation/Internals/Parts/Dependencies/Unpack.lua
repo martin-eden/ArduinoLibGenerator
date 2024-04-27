@@ -7,7 +7,7 @@
 -- Last mod.: 2024-03-03
 
 local ParseList = request('!.string.parse_list')
-local ParseDependency = request('Core.ParseDependency')
+local ParseDependency = request('Dependency.Unpack')
 
 return
   function(DataStr)

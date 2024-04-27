@@ -41,17 +41,17 @@
       dropped it. Less is better.)
 ]]
 
--- Last mod.: 2024-03-05
+-- Last mod.: 2024-04-28
 
 local AnnotatedLinesFormat = request('!.concepts.AnnotatedLines.Interface')
 local StringFromLines = request('!.string.from_lines')
 
 local CheckRequiredFields = request('Parts.CheckLibrary_Lua')
-local CheckLibName = request('Parts.Core.CheckLibName')
+local CheckLibName = request('Parts.CheckLibName')
 
-local SerializePersons = request('Parts.SerializePersons')
-local SerializeDependencies = request('Parts.SerializeDependencies')
-local SerializeArchitectures = request('Parts.SerializeArchitectures')
+local SerializePersons = request('Parts.Persons.Pack')
+local SerializeDependencies = request('Parts.Dependencies.Pack')
+local SerializeArchitectures = request('Parts.Architectures.Pack')
 
 return
   function(ConfigContents)

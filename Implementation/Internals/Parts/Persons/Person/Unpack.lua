@@ -5,6 +5,8 @@
 
     string
 
+      Name [ "<" Email ">" ]
+
   Output
 
     table

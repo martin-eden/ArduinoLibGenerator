@@ -1,29 +1,52 @@
 return {
   How = {
     Architectures = {
-      '*',
+      'a',
+      'b',
+      'c',
     },
-    Dependencies = {},
+    Dependencies = {
+      {
+        Name = 'dep_1',
+        VersionExpr = '> 0',
+      },
+      {
+        Name = 'dep_2',
+        VersionExpr = '',
+      },
+    },
   },
   What = {
-    Category = 'Uncategorized',
-    Description = 'Episode IV. A NEW HOPE',
-    Description_Continued = 'It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire.',
-    MoreInfo_Url = 'https://url-for-more.info',
-    Name = 'MyLibbaName',
+    Category = 'meh',
+    Description = 'Description summary',
+    Description_Continued = 'Description',
+    MoreInfo_Url = 'blah',
+    Name = 'Another library',
     Version = '1.0.0',
   },
   Who = {
     Authors = {
       {
+        Email = 'aha',
+        Name = 'I Am',
+      },
+      {
+        Email = 'nah',
+        Name = 'He Is',
+      },
+      {
         Email = '',
-        Name = 'John Johnson',
+        Name = 'They Are',
       },
     },
     Maintainers = {
       {
+        Email = 'hah',
+        Name = 'She Is',
+      },
+      {
         Email = '',
-        Name = 'John Johnson',
+        Name = 'It Is',
       },
     },
   },
