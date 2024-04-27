@@ -7,7 +7,7 @@
 -- Last mod.: 2024-03-04
 
 local SerializeList = request('!.table.serialize_list')
-local SerializePerson = request('Core.SerializePerson')
+local SerializePerson = request('Person.Pack')
 
 return
   function(Data)

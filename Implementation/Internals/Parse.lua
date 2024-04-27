@@ -12,17 +12,17 @@
       Example: { ['/tmp/lib_config.lua'] = 'return {}' }
 ]]
 
--- Last mod.: 2024-03-03
+-- Last mod.: 2024-04-28
 
 local AnnotatedLinesFormat = request('!.concepts.AnnotatedLines.Interface')
 local StringFromLines = request('!.string.from_lines')
 
 local CheckRequiredFields = request('Parts.CheckLibrary_AnnotatedLines')
-local CheckLibName = request('Parts.Core.CheckLibName')
+local CheckLibName = request('Parts.CheckLibName')
 
-local ParsePersons = request('Parts.ParsePersons')
-local ParseDependencies = request('Parts.ParseDependencies')
-local ParseArchitectures = request('Parts.ParseArchitectures')
+local ParsePersons = request('Parts.Persons.Unpack')
+local ParseDependencies = request('Parts.Dependencies.Unpack')
+local ParseArchitectures = request('Parts.Architectures.Unpack')
 
 local TableToString = request('!.table.as_lua_code')
 

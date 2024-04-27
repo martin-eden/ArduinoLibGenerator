@@ -7,7 +7,7 @@
 -- Last mod.: 2024-03-04
 
 local ParseList = request('!.string.parse_list')
-local ParsePerson = request('Core.ParsePerson')
+local ParsePerson = request('Person.Unpack')
 
 return
   function(DataStr)

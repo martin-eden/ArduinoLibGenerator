@@ -7,7 +7,7 @@
 -- Last mod.: 2024-03-04
 
 local SerializeList = request('!.table.serialize_list')
-local SerializeDependency = request('Core.SerializeDependency')
+local SerializeDependency = request('Dependency.Pack')
 
 return
   function(Data)
