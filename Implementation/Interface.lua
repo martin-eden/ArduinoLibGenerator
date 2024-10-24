@@ -5,7 +5,7 @@
 return
   {
     -- Configuration defaults
-    ResultsDir = 'Results/',
+    ResultsDir = 'Data/',
     ConfigurationFilename = 'Configurations/Sample.lua',
     DoDecompile = false,
     -- Main
