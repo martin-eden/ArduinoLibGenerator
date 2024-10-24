@@ -21,11 +21,11 @@
     'Adafruit MPU6050 (>=2.2.4)' ->
       { Name = 'Adafruit MPU6050', VersionExpr = '>=2.2.4' }
 
-    ' A  ( >=0.0.0 ) ' -> { Name = 'A', VersionExpr = '>=0.0.0' }
     // We trim side spaces
+    ' A  ( >=0.0.0 ) ' -> { Name = 'A', VersionExpr = '>=0.0.0' }
 
-    '(B(C))' -> { Name = '', VersionExpr = 'B(C)' }
     // We don't care about validity of library name and <VersionExpr> semantics
+    '(B(C))' -> { Name = '', VersionExpr = 'B(C)' }
 ]]
 
 -- Last mod.: 2024-03-28
