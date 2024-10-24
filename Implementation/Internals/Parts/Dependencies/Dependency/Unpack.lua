@@ -43,7 +43,7 @@ return
 
       -- Name is a string prefix until "("
       local NameFormatStr = '^[^(]+'
-      local Name = string.match(s, NameFormatStr)
+      local Name = string.match(s, NameFormatStr) or ''
       Name = RTrim(Name)
 
       -- VersionExpr is a contents of balanced parenthesis ()
