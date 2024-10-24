@@ -1,0 +1,24 @@
+What
+  Name
+    me_Heap
+  Description
+    Memory manager
+  Description_Continued
+    [Adds global "Heap". Call "Heap.Init(<Heap_Size)" to bring it to life.]
+  MoreInfo_Url
+    https://github.com/martin-eden/Embedded-me_Heap
+  Category
+    Other
+How
+  Architecture
+    avr
+  Dependencies
+    me_BaseTypes
+    me_Console
+    me_String
+    me_ManagedMemory
+    me_MemorySegment
+    me_InstallStandardStreams
+    me_UartSpeeds
+Author
+  [Martin Eden]
