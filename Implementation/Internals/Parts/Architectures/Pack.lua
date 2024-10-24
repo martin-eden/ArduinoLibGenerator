@@ -1,10 +1,6 @@
 -- Serialize list of architectures
 
---[[
-  See [SerializeList] for documentation.
-]]
-
--- Last mod.: 2024-03-04
+-- Last mod.: 2024-10-24
 
 local SerializeList = request('!.table.serialize_list')
 
