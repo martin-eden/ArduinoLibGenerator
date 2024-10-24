@@ -4,16 +4,19 @@
   See [SerializeList] and [SerializePerson] for documentation.
 ]]
 
--- Last mod.: 2024-03-04
+-- Last mod.: 2024-10-24
 
-local SerializeList = request('!.table.serialize_list')
 local SerializePerson = request('Person.Pack')
+local FuncToList = request('!.concepts.List.ApplyFunction')
+local SerializeList = request('!.concepts.List.ToString')
 
 return
   function(Data)
-    return SerializeList(Data, SerializePerson, ', ')
+    local PersStrList = FuncToList(SerializePerson, Data)
+    return SerializeList(PersStrList, ',')
   end
 
 --[[
   2024-03-04
+  2024-10-24
 ]]
