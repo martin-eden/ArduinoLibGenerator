@@ -12,7 +12,7 @@
       Example: { ['/tmp/lib_config.lua'] = 'return {}' }
 ]]
 
--- Last mod.: 2024-04-28
+-- Last mod.: 2024-10-24
 
 local AnnotatedLinesFormat = request('!.concepts.AnnotatedLines.Interface')
 local StringFromLines = request('!.string.from_lines')
@@ -23,6 +23,8 @@ local CheckLibName = request('Parts.CheckLibraryName')
 local ParsePersons = request('Parts.Persons.Unpack')
 local ParseDependencies = request('Parts.Dependencies.Unpack')
 local ParseArchitectures = request('Parts.Architectures.Unpack')
+
+local SimplifyConfig = request('Parts.SimplifyConfig')
 
 local TableToString = request('!.table.as_lua_code')
 
@@ -85,7 +87,7 @@ return
     end
     assert_table(Config)
 
-    -- Call that annoying name checker and continue:
+    -- Call that annoying library name checker and continue:
     do
       local LibName = Config.What.Name
       local NameIsOkay, Complain = CheckLibName(LibName)
@@ -97,10 +99,9 @@ return
       end
     end
 
-    local Config_Str
-    do
-      Config_Str = TableToString(Config)
-    end
+    SimplifyConfig(Config)
+
+    local Config_Str = TableToString(Config)
     assert_string(Config_Str)
 
     local Result
@@ -114,4 +115,5 @@ return
 
 --[[
   2024-03-03
+  2024-10-24
 ]]
