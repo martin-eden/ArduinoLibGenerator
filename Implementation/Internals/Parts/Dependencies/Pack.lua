@@ -1,19 +1,18 @@
 -- Serialize list of dependencies
 
---[[
-  See [SerializeList] and [SerializeDependency] for documentation.
-]]
+-- Last mod.: 2024-10-24
 
--- Last mod.: 2024-03-04
-
-local SerializeList = request('!.table.serialize_list')
 local SerializeDependency = request('Dependency.Pack')
+local FuncToList = request('!.concepts.List.ApplyFunction')
+local SerializeList = request('!.concepts.List.ToString')
 
 return
   function(Data)
-    return SerializeList(Data, SerializeDependency, ', ')
+    local DepsStrList = FuncToList(SerializeDependency, Data)
+    return SerializeList(DepsStrList, ',')
   end
 
 --[[
   2024-03-04
+  2024-10-24
 ]]
