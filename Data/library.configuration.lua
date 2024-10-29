@@ -1,38 +1,7 @@
 return {
   How = {
-    Architectures = {
-      'avr',
-    },
-    Dependencies = {
-      {
-        Name = 'me_BaseTypes',
-        VersionExpr = '',
-      },
-      {
-        Name = 'me_Console',
-        VersionExpr = '',
-      },
-      {
-        Name = 'me_String',
-        VersionExpr = '',
-      },
-      {
-        Name = 'me_ManagedMemory',
-        VersionExpr = '',
-      },
-      {
-        Name = 'me_MemorySegment',
-        VersionExpr = '',
-      },
-      {
-        Name = 'me_InstallStandardStreams',
-        VersionExpr = '',
-      },
-      {
-        Name = 'me_UartSpeeds',
-        VersionExpr = '',
-      },
-    },
+    Architecture = 'avr',
+    Dependency = '',
   },
   What = {
     Category = 'Other',
@@ -43,17 +12,7 @@ return {
     Version = '1.0.0',
   },
   Who = {
-    Authors = {
-      {
-        Email = '',
-        Name = 'Martin Eden',
-      },
-    },
-    Maintainers = {
-      {
-        Email = '',
-        Name = 'Martin Eden',
-      },
-    },
+    Author = 'Martin Eden',
+    Maintainer = 'Martin Eden',
   },
 }
