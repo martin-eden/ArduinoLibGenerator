@@ -15,7 +15,7 @@
 ]]
 
 local GetNumEntries = request('!.table.get_num_entries')
-local ApplyFuncToList = request('!.concepts.List.ApplyFunctionInPlace')
+local ApplyFunc = request('!.concepts.List.ApplyFunc')
 
 -- Return true if node contains only one value
 local IsOnlyValue =
@@ -87,9 +87,9 @@ local SimplifyConfig =
       Config.How.Architectures = nil
     end
 
-    ApplyFuncToList(SimplifyDependencyRec, Config.How.Dependencies)
-    ApplyFuncToList(SimplifyPersonRec, Config.Who.Authors)
-    ApplyFuncToList(SimplifyPersonRec, Config.Who.Maintainers)
+    ApplyFunc(SimplifyDependencyRec, Config.How.Dependencies)
+    ApplyFunc(SimplifyPersonRec, Config.Who.Authors)
+    ApplyFunc(SimplifyPersonRec, Config.Who.Maintainers)
 
     if IsOnlyValue(Config.How.Dependencies) then
       Config.How.Dependency = GetOnlyValue(Config.How.Dependencies)

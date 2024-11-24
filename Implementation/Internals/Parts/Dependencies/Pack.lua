@@ -3,12 +3,12 @@
 -- Last mod.: 2024-10-24
 
 local SerializeDependency = request('Dependency.Pack')
-local FuncToList = request('!.concepts.List.ApplyFunction')
+local ListOfFunc = request('!.concepts.List.ListOfFunc')
 local SerializeList = request('!.concepts.List.ToString')
 
 return
   function(Data)
-    local DepsStrList = FuncToList(SerializeDependency, Data)
+    local DepsStrList = ListOfFunc(SerializeDependency, Data)
     return SerializeList(DepsStrList, ',')
   end
 

@@ -7,12 +7,12 @@
 -- Last mod.: 2024-10-24
 
 local SerializePerson = request('Person.Pack')
-local FuncToList = request('!.concepts.List.ApplyFunction')
+local ListOfFunc = request('!.concepts.List.ListOfFunc')
 local SerializeList = request('!.concepts.List.ToString')
 
 return
   function(Data)
-    local PersStrList = FuncToList(SerializePerson, Data)
+    local PersStrList = ListOfFunc(SerializePerson, Data)
     return SerializeList(PersStrList, ',')
   end
 
