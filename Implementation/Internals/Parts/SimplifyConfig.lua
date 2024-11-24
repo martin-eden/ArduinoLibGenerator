@@ -1,5 +1,7 @@
 -- Simplify configuration table
 
+-- Last mod.: 2024-11-24
+
 --[[
   I want following transformations:
 
@@ -13,7 +15,7 @@
 ]]
 
 local GetNumEntries = request('!.table.get_num_entries')
-local FuncToList = request('!.concepts.List.ApplyFunction')
+local ApplyFuncToList = request('!.concepts.List.ApplyFunctionInPlace')
 
 -- Return true if node contains only one value
 local IsOnlyValue =
@@ -85,9 +87,9 @@ local SimplifyConfig =
       Config.How.Architectures = nil
     end
 
-    Config.How.Dependencies = FuncToList(SimplifyDependencyRec, Config.How.Dependencies)
-    Config.Who.Authors = FuncToList(SimplifyPersonRec, Config.Who.Authors)
-    Config.Who.Maintainers = FuncToList(SimplifyPersonRec, Config.Who.Maintainers)
+    ApplyFuncToList(SimplifyDependencyRec, Config.How.Dependencies)
+    ApplyFuncToList(SimplifyPersonRec, Config.Who.Authors)
+    ApplyFuncToList(SimplifyPersonRec, Config.Who.Maintainers)
 
     if IsOnlyValue(Config.How.Dependencies) then
       Config.How.Dependency = GetOnlyValue(Config.How.Dependencies)
