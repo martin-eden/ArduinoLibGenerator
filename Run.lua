@@ -21,15 +21,15 @@
 
 --[[
   Version: 4
-  Last mod.: 2024-03-03
+  Last mod.: 2026-04-17
 ]]
 
---[[ Load development [workshop]: ]]
+--[[ Load development [workshop]:
 package.path = package.path .. ';../../?.lua'
 require('workshop.base')
 --]]
 
---[[ Load built-in [workshop]: ] ]
+-- [[ Load built-in [workshop]:
 require('Implementation.workshop.base')
 --]]
 
